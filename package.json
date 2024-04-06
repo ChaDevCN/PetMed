@@ -4,11 +4,15 @@
   "description": "云上动物医院",
   "main": "index.js",
   "scripts": {
-    "dev:app":"pnpm --filter app dev:weapp",
-    "dev:client":"pnpm --filter client dev",
-    "dev:server":"pnpm --filter server start:dev"
+    "dev:app":"pnpm -F app dev:weapp",
+    "dev:client":"pnpm -F client dev",
+    "dev:server":"pnpm -F server start:dev"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "keywords": ["动物", "医院", "nest", "taro", "next"],
+  "author": "charlie.l1u@outlook.com",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18.17.0",
+    "npm": ">=9.6.7"
+  }
 }
