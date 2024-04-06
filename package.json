@@ -1,0 +1,14 @@
+{
+  "name": "PetMed",
+  "version": "1.0.0",
+  "description": "云上动物医院",
+  "main": "index.js",
+  "scripts": {
+    "dev:app":"pnpm --filter app dev:weapp",
+    "dev:client":"pnpm --filter client dev",
+    "dev:server":"pnpm --filter server start:dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
