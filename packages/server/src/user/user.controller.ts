@@ -28,10 +28,10 @@ export class UserController {
   async signUp(@Body() loginUser: UserLoginDto) {
     return this.userService.signUp(loginUser);
   }
-  @Get('getRoleAll')
+  @Get('/all-users-details')
   // @RequireLogin()
   // @RequirePermission(Permission.ViewRoles)
-  async getRoleAll() {
-    return await this.userService.getRoleAll();
+  async getAllUsersDetails() {
+    return await this.userService.findAllUsersWithRolesAndPermissions();
   }
 }

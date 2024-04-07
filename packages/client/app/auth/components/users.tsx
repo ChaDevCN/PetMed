@@ -9,9 +9,10 @@ import Table from "./Table"
 
 const Page = async () => {
   const data = await fetchData<UserData[]>({
-    url: "/user/getRoleAll",
+    url: "/user/all-users-details",
   });
-
+  console.log(data);
+  
   return (
     <div className="w-full h-full">
       <div className="h-[200px]"><Table data={data} /></div>
