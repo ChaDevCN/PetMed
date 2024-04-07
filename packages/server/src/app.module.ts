@@ -36,7 +36,7 @@ if (IS_DEV) {
         database: configService.get<string>('DATABASE_NAME'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: true,
-        retryDelay: 500,
+        retryDelay: 1000,
         retryAttempts: 10,
         autoLoadEntities: true,
       }),
