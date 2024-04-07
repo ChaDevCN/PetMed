@@ -18,7 +18,7 @@
 yarn-error.log
 npm-debug.log*
 
-.vscode/
+# .vscode/
 *.sublime-workspace
 *.sublime-project
 

@@ -34,14 +34,10 @@ export class PermissionGuard implements CanActivate {
       return total;
     }, []);
 
-    console.log(permissions);
-
     const requiredPermissions = this.reflector.getAllAndOverride<string[]>(
       'require-permission',
       [context.getClass(), context.getHandler()],
     );
-
-    console.log(requiredPermissions);
 
     for (let i = 0; i < requiredPermissions.length; i++) {
       const curPermission = requiredPermissions[i];
