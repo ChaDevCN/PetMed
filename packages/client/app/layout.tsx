@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import {Header} from "@/components"
+import { Header } from "@/components";
+import { Providers } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -15,15 +16,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="light">
       <body className={inter.className}>
-        <div className="flex overflow-hidden w-[100%] h-[100vh]">
-          <div className="w-[280px] h-[100vh] hidden lg:block"></div>
-          <div className="flex-1 flex flex-col bg-[#f3f2f7]">
-            <Header/>
-            <main className="flex-1 overflow-auto px-10 py-2">{children}</main>
+        
+          <div className="flex overflow-hidden w-[100%] h-[100vh]">
+            <div className="w-[280px] h-[100vh] hidden lg:block"></div>
+            <div className="flex-1 flex flex-col bg-[#f3f2f7]">
+              <Header />
+              <main className="flex-1 overflow-auto px-10 py-2">
+              <Providers>
+                {children}
+                </Providers>
+              </main>
+            </div>
           </div>
-        </div>
+       
       </body>
     </html>
   );

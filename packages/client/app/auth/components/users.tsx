@@ -15,7 +15,9 @@ const Page = async () => {
   
   return (
     <div className="w-full h-full">
-      <div className="h-[200px]"><Table data={data} /></div>
+      <div className="h-[200px]">
+      <Table data={data} />
+      </div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { EntityManager, In } from 'typeorm';
 import { UserLoginDto } from './dto/login-user.dto';
 import { Role } from './entities/role.entity';
 import { User } from './entities/user.entity';
+import { PermissionEntity } from './entities/permission.entity';
 @Injectable()
 export class UserService {
   @InjectEntityManager()
@@ -61,10 +62,29 @@ export class UserService {
   }
 
   async findAllUsersWithRolesAndPermissions() {
-    return this.entityManager
+    return await this.entityManager
       .createQueryBuilder(User, 'user')
       .leftJoinAndSelect('user.roles', 'role')
       .leftJoinAndSelect('role.permissions', 'permission')
       .getMany();
+  }
+  async findAllPermissions() {
+    return await this.entityManager.find(PermissionEntity);
+  }
+  async setPermissionsForRole(
+    roleId: number,
+    permissionIds: number[],
+  ): Promise<Role> {
+    const role = await this.entityManager.findOneOrFail(Role, {
+      where: { id: roleId },
+    });
+    const permissions = await this.entityManager.findByIds(
+      PermissionEntity,
+      permissionIds,
+    );
+
+    role.permissions = permissions;
+
+    return this.entityManager.save(Role, role);
   }
 }

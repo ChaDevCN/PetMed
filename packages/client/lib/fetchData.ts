@@ -10,7 +10,9 @@ interface Props {
 }
 
 const fetchData = async <T>({ url, method, data }: Props) => {
-  const res = await fetch(`http://localhost:3001${url}`, {
+  
+  
+  const res = await fetch(`http://localhost:8081${url}`, {
     method: method || "GET",
     headers: {
       "Content-Type": "application/json",

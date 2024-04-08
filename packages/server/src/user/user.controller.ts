@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Inject, Get } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Inject,
+  Get,
+  Put,
+  Param,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from './user.service';
 import { UserLoginDto } from './dto/login-user.dto';
@@ -33,5 +41,16 @@ export class UserController {
   // @RequirePermission(Permission.ViewRoles)
   async getAllUsersDetails() {
     return await this.userService.findAllUsersWithRolesAndPermissions();
+  }
+  @Get('/all-permissions')
+  async getAllPermissions() {
+    return await this.userService.findAllPermissions();
+  }
+  @Put(':roleId/permissions')
+  setPermissions(
+    @Param('roleId') roleId: number,
+    @Body('permissionIds') permissionIds: number[],
+  ) {
+    return this.userService.setPermissionsForRole(roleId, permissionIds);
   }
 }
