@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import logo from "@/public/svg/logo.svg";
-import { AvatarMenu } from "@/components";
+import { AvatarMenu } from "@/components/index";
 
 const Header = () => {
   return (
