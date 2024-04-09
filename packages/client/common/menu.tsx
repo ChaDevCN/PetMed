@@ -7,8 +7,8 @@ import {
   PowerIcon,
 } from "@heroicons/react/20/solid";
 
-import { Auth } from "@/interface"
-import {userColumn} from "@/utils/table"
+import { Auth } from "@/interface";
+import { userColumn,RolesColumn } from "@/utils/table";
 
 const iconColor = {
   color: "#A78BFA",
@@ -20,7 +20,7 @@ export const menus = [
   {
     name: "个人信息",
     icon: <UserIcon className="mr-2 h-5 w-5" style={iconColor} />,
-    link: "/auth/users",
+    link: "/auth/users/1",
     type: "users",
   },
   {
@@ -59,23 +59,23 @@ export const auth: Auth = {
     type: "users",
     tabs: [
       {
-        key: '1',
+        key: "1",
         name: "用户管理",
         getDataList: {
           url: "/user/all-users-details",
-          method: 'get',
-          column:userColumn
-        }
+          method: "get",
+          column: userColumn,
+        },
       },
       {
-        key: '2',
+        key: "2",
         name: "角色管理",
         getDataList: {
           url: "/user/all-roles",
-          method: 'get',
-          column:userColumn
-        }
+          method: "get",
+          column: RolesColumn,
+        },
       },
-    ]
-  }
+    ],
+  },
 };

@@ -71,6 +71,12 @@ export class UserService {
   async findAllPermissions() {
     return await this.entityManager.find(PermissionEntity);
   }
+  async getAllRoles() {
+    return await this.entityManager
+      .createQueryBuilder(Role, 'role')
+      .leftJoinAndSelect('role.permissions', 'permission')
+      .getMany();
+  }
   async setPermissionsForRole(
     roleId: number,
     permissionIds: number[],

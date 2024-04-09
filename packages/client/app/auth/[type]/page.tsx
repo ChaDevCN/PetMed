@@ -1,11 +1,7 @@
 import { redirect } from 'next/navigation'
-import { Params } from "@/interface"
-const Auth = ({ params: { key, type } }: {params:Params}) => {
-  console.log(type , key);
-  
-  if(type === 'users' && !key){
-    return redirect('/auth/users/1')
-  }
-  return redirect('/404')
-};
+import {menus} from "@/common/menu"
+export const generateStaticParams = () => {
+    return menus.map(items=>({type: items.link.split('/')[2]}))
+}
+const Auth = () =>redirect('/404')
 export default Auth;

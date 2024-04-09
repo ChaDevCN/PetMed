@@ -1,36 +1,34 @@
 import type { Params } from "@/interface";
-import { userColumn } from "@/utils/table";
-import { Table, TableHeader, TableRow, TableHead ,TableBody,TableCell} from "@/components/ui/table";
+import type { UserData } from "@/interface";
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 interface Data {
-  data: any[];
-  column: any[];
+  data: UserData[];
+  column?: any[];
 }
 const Tables = ({
-  params: { type, key },
   data: { data, column },
 }: {
-  params: Params;
+  params?: Params;
   data: Data;
 }) => {
-  // const [columnDefs] = useState(column)
   return (
-    <div className={"ag-theme-quartz w-[100%] h-[200px]"}>
+    <div>
       <Table>
         <TableHeader>
           <TableRow>
-            {userColumn.map((item) => (
+            {column && column.map((item) => (
               <TableHead key={item.field}>{item.headerName}</TableHead>
             ))}
           </TableRow>
         </TableHeader>
         <TableBody>
-        {data.map((invoice) => (
-          <TableRow key={invoice.id}>
-            {
-              userColumn.map(items=><TableCell key={items.field}>{items.valueFormatter(invoice)}</TableCell>) 
-            }
-          </TableRow>
-        ))}
+          {data.map((invoice:any) => (
+            <TableRow key={invoice.id}>
+              {
+                column && column.map(items => <TableCell key={items.field}>{items.valueFormatter(invoice, column.map(({ valueFormatter, ...res }) => (res)))}</TableCell>)
+              }
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>

@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 
-
 import { Card } from "@/components/ui/card";
 import { Drawer } from "@/components/ui/drawer";
 
@@ -44,9 +43,9 @@ const Page = async ({ params: { key, type } }: Props) => {
       <Tabs params={{ key, type }} />
       <br />
       <br />
-      <Drawer direction="right">
+      <Drawer direction="right" >
         <Card className="p-5">
-          <Table params={{ key, type }} data={{ data, column }} />
+          <Table params={{ key, type }} data={{ data, column }}  />
         </Card>
         <DrawerContent />
       </Drawer>

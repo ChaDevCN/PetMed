@@ -46,6 +46,10 @@ export class UserController {
   async getAllPermissions() {
     return await this.userService.findAllPermissions();
   }
+  @Get('/all-roles')
+  async getAllRoles() {
+    return await this.userService.getAllRoles();
+  }
   @Put(':roleId/permissions')
   setPermissions(
     @Param('roleId') roleId: number,

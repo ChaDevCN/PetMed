@@ -25,3 +25,6 @@ export interface Params {
   type: string;
   key: string
 }
+export interface RolesMap {
+  [key: number]: string;
+}

@@ -1,3 +1,2 @@
-// "use server"
-import { userColumn } from "./columns";
-export { userColumn };
+
+export * from "./columns";
