@@ -9,6 +9,12 @@ interface Props {
     [key: string]: any;
   };
 }
+interface Response <T> {
+  data:T
+  status:number
+  success:boolean
+  message:string
+}
 
 const fetchData = async <T>({ url, method, data }: Props) => {
   // const cookieStore = cookies()

@@ -57,4 +57,9 @@ export class UserController {
   ) {
     return this.userService.setPermissionsForRole(roleId, permissionIds);
   }
+
+  @Get('/menu')
+  async init() {
+    return this.userService.menu();
+  }
 }

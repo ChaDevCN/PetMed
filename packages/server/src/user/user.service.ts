@@ -5,6 +5,7 @@ import { UserLoginDto } from './dto/login-user.dto';
 import { Role } from './entities/role.entity';
 import { User } from './entities/user.entity';
 import { PermissionEntity } from './entities/permission.entity';
+import { Menu } from './entities/menu.entity';
 @Injectable()
 export class UserService {
   @InjectEntityManager()
@@ -92,5 +93,42 @@ export class UserService {
     role.permissions = permissions;
 
     return this.entityManager.save(Role, role);
+  }
+  async menu() {
+    // const menu1 = new Menu();
+    // menu1.name = '医疗管理';
+    // menu1.link = '/medical-management/case-center';
+    // await this.entityManager.save(menu1);
+    // const menu1Children = new Menu();
+    // menu1Children.name = '病例中心';
+    // menu1Children.link = '/medical-management/case-center';
+    // const menu2Children = new Menu();
+    // menu2Children.name = '医学报告';
+    // menu2Children.link = '/medical-management/diagnostic-reports';
+
+    // const menu3Children = new Menu();
+    // menu3Children.name = '患者预约';
+    // menu3Children.link = '/medical-management/appointments';
+
+    // const menu5Children = new Menu();
+    // menu5Children.name = '医生资源';
+    // menu5Children.link = '/medical-management/doctor-resources';
+    // const parent = await this.entityManager.findOne(Menu, {
+    //   where: {
+    //     name: '医疗管理',
+    //   },
+    // });
+    // if (parent) {
+    //   menu1Children.parent = parent;
+    //   menu2Children.parent = parent;
+    //   menu3Children.parent = parent;
+    //   menu5Children.parent = parent;
+    // }
+    // await this.entityManager.save(Menu, menu1Children);
+    // await this.entityManager.save(Menu, menu2Children);
+    // await this.entityManager.save(Menu, menu3Children);
+    // await this.entityManager.save(Menu, menu5Children);
+
+    return this.entityManager.getTreeRepository(Menu).findTrees();
   }
 }

@@ -36,14 +36,13 @@ const Page = async ({ params: { key, type } }: Props) => {
     url,
     method,
   });
-
   return (
     <div>
       <Tabs params={{ key, type }} />
       <Card className="p-5 mt-10">
         <Table params={{ key, type }} data={{ data, column }} />
       </Card>
-      <DrawerPage  />
+      <DrawerPage />
     </div>
   );
 };
