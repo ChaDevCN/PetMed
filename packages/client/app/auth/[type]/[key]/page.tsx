@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 
 import { Card } from "@/components/ui/card";
-import { Drawer } from "@/components/ui/drawer";
 
 import { Auth, Params } from "@/interface";
 
@@ -9,7 +8,7 @@ import fetchData from "@/lib/fetchData";
 
 import { auth } from "@/common/menu";
 
-import { Tabs, Table, DrawerContent } from "../../components";
+import { Tabs, Table,DrawerPage } from "../../components";
 
 interface Props {
   params: Params;
@@ -41,14 +40,10 @@ const Page = async ({ params: { key, type } }: Props) => {
   return (
     <div>
       <Tabs params={{ key, type }} />
-      <br />
-      <br />
-      <Drawer direction="right" >
-        <Card className="p-5">
+        <Card className="p-5 mt-10"> 
           <Table params={{ key, type }} data={{ data, column }}  />
-        </Card>
-        <DrawerContent />
-      </Drawer>
+      </Card>
+      <DrawerPage/>
     </div>
   );
 };

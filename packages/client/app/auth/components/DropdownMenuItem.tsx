@@ -6,7 +6,6 @@ import { observer } from "mobx-react-lite"
 import {
     DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { DrawerTrigger } from "@/components/ui/drawer";
 
 import { useStores } from "@/store"
 interface Props {
@@ -17,21 +16,18 @@ interface Props {
     items: any[]
 }
 const Page = ({ icon, type, content, data, items }: Props) => {
-    const [open,setOpen] = useState(false)
     const { usersStore } = useStores()
-    const { setDrawerFormData } = usersStore
+    const { setDrawerFormData ,setOpenDrawer} = usersStore
     const click = () => {
         setDrawerFormData({ ...data, type, columns: items })
-        setOpen(!open)
+        setOpenDrawer(true)
     }
     return (
         <DropdownMenuItem>
-            <DrawerTrigger  onClick={click} >
-                <div className="flex items-center w-full" style={{ gap: "8px" }}>
+                <div className="flex items-center w-full" style={{ gap: "8px" }} onClick={click}>
                     {icon}
                     <div>{content}</div>
                 </div>
-            </DrawerTrigger>
         </DropdownMenuItem>
     );
 };

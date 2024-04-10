@@ -2,7 +2,7 @@ import { action, makeAutoObservable, observable } from 'mobx'
 
 export class User {
   drawerFormData = {};
-
+  openDrawer = false
   constructor() {
     /**
         * makeObservable 与 makeAutoObservable区别在于：
@@ -15,6 +15,8 @@ export class User {
         */
     makeAutoObservable(this, {
       setDrawerFormData: action,
+      setOpenDrawer:action,
+      openDrawer:observable,
       drawerFormData: observable
     })
     /**
@@ -31,6 +33,10 @@ export class User {
   get getDrawerFormData() {
     return this.drawerFormData
   }
+  setOpenDrawer =(open:boolean) => {
+    this.openDrawer = open
+  }
+
 }
 
 const usersStore = new User();
