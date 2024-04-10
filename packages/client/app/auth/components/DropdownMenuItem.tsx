@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { observer } from "mobx-react-lite"
 
 
@@ -19,6 +19,8 @@ const Page = ({ icon, type, content, data, items }: Props) => {
     const { usersStore } = useStores()
     const { setDrawerFormData ,setOpenDrawer} = usersStore
     const click = () => {
+        if(type === 'delete') return
+        
         setDrawerFormData({ ...data, type, columns: items })
         setOpenDrawer(true)
     }

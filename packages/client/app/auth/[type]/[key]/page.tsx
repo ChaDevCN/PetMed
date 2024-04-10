@@ -8,7 +8,7 @@ import fetchData from "@/lib/fetchData";
 
 import { auth } from "@/common/menu";
 
-import { Tabs, Table,DrawerPage } from "../../components";
+import { Tabs, Table, DrawerPage } from "../../components";
 
 interface Props {
   params: Params;
@@ -27,8 +27,8 @@ export const generateStaticParams = () => {
   return result;
 };
 const Page = async ({ params: { key, type } }: Props) => {
-  const { url, method, column } =
-    auth[type].tabs[parseInt(key || "1") - 1].getDataList;
+  const { getDataList } = auth[type].tabs[parseInt(key || "1") - 1];
+  const { url, method, column } = getDataList;
   if (!result.find((s) => s.key === key && s.type === type)) {
     return redirect("/404");
   }
@@ -40,10 +40,10 @@ const Page = async ({ params: { key, type } }: Props) => {
   return (
     <div>
       <Tabs params={{ key, type }} />
-        <Card className="p-5 mt-10"> 
-          <Table params={{ key, type }} data={{ data, column }}  />
+      <Card className="p-5 mt-10">
+        <Table params={{ key, type }} data={{ data, column }} />
       </Card>
-      <DrawerPage/>
+      <DrawerPage  />
     </div>
   );
 };

@@ -10,13 +10,11 @@ const DrawerPage = () => {
   const { setOpenDrawer, openDrawer } = usersStore;
   return (
     <Drawer
+      dismissible
       open={openDrawer}
-      direction="right"
-      onOpenChange={(open) => {
-        setOpenDrawer(open);
-      }}
+      onOpenChange={(open) => setOpenDrawer(open)}
     >
-      <DrawerContent />
+      {openDrawer && <DrawerContent />}
     </Drawer>
   );
 };

@@ -9,6 +9,7 @@ import {
 
 import { Auth } from "@/interface";
 import { userColumn,RolesColumn } from "@/utils/table";
+import {UsersSchema,RolesSchema} from "@/schema"
 
 const iconColor = {
   color: "#A78BFA",
@@ -54,7 +55,7 @@ export const menus = [
   },
 ];
 
-export const auth: Auth = {
+export const auth: Auth<typeof UsersSchema | typeof RolesSchema | any> = {
   users: {
     type: "users",
     tabs: [
@@ -66,6 +67,7 @@ export const auth: Auth = {
           method: "get",
           column: userColumn,
         },
+        schema:UsersSchema
       },
       {
         key: "2",
@@ -75,7 +77,61 @@ export const auth: Auth = {
           method: "get",
           column: RolesColumn,
         },
+        schema:RolesSchema
       },
     ],
   },
 };
+
+export const homeMenus = [
+  {
+    name:'会员管理',
+    link:'/doctors', 
+    icon:'',
+    tpye:'',
+    children:[
+      {
+        link:'/doctors', 
+        icon:'',
+        type:'',
+        name:'医生管理'
+      },
+      {
+        link:'/users', 
+        icon:'',
+        type:'',
+        name:'用户管理'
+      }
+    ]
+  },
+  {
+    name: '医疗科室',
+    link: '/departments', // 医疗科室的链接
+    icon: '',
+    type: '',
+  },
+  {
+    name:'预约管理',
+    link:'/appointments', 
+    icon:'',
+    tpye:'',
+  },
+  {
+    name:'诊疗记录',
+    link:'/medical-records', 
+    icon:'',
+    tpye:'',
+  },
+  {
+    name:'评价和反馈',
+    link:'/feedback', 
+    icon:'',
+    tpye:'',
+  },
+  {
+    name:"消息中心",
+    link:'/messages', 
+    icon:'',
+    tpye:''
+  }
+]

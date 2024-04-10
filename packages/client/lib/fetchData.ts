@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import "server-only";
 
 interface Props {
@@ -10,12 +11,13 @@ interface Props {
 }
 
 const fetchData = async <T>({ url, method, data }: Props) => {
-  
-  
+  // const cookieStore = cookies()
+  // let token = cookieStore.get('user_token') || ''
   const res = await fetch(`http://localhost:8081${url}`, {
     method: method || "GET",
     headers: {
       "Content-Type": "application/json",
+      // 'Authorization' : `Bearer ${token}`
     },
     body: JSON.stringify(data),
   });

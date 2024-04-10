@@ -1,11 +1,10 @@
 "use client";
 import { observer } from "mobx-react-lite";
-import { usePathname } from "next/navigation";
 import { z } from "zod";
 import { useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DrawerContent } from "@/components/ui/drawer";
+import { DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 import { useStores } from "@/store";
 import FormFields from "@/components/FormFields";
 import { Form } from "@/components/ui/form";
@@ -13,9 +12,11 @@ import { UsersSchema } from "@/schema";
 import { FormConfig } from "@/interface";
 import { Button } from "@/components/ui/button";
 import { useMemo, useRef, useState } from "react";
+const drawertitleMap: Record<string, any> = {
+  eye: "查看",
+  edit: "编辑",
+};
 const Page = () => {
-  const pathname = usePathname();
-  const configMap = useRef<Record<string, any>>();
   const { usersStore } = useStores();
   const { drawerFormData } = usersStore;
   const { pending } = useFormStatus();
@@ -25,13 +26,12 @@ const Page = () => {
   );
   const [config, setConfig] = useState<FormConfig[]>([]);
   const dirty = useRef(false);
-  const disable = formData.type === "eye" ? true : false;
-  let defaultValues: Record<string, any> = {};
-  const resetValues: Record<string, any> = {};
+  const disabled = formData.type === "eye" ? true : false;
 
+  let defaultValues: Record<string, any> = {};
   const form = useForm({
     resolver: zodResolver(UsersSchema),
-    defaultValues: {},
+    defaultValues,
   });
   if (formData && formData?.columns && Array.isArray(formData.columns)) {
     const config = formData.columns
@@ -42,42 +42,37 @@ const Page = () => {
       .map((items: any) => {
         const value = formData[items.field];
         defaultValues[items.field] = value;
-        resetValues[items.field] = value;
         return {
           ...items,
-          disable,
+          disabled,
           value,
         };
       });
     if (!dirty.current) {
       setConfig(config);
-      configMap.current = {
-        ...configMap.current,
-        [`${pathname}/${formData.type}`]: defaultValues,
-      };
-      form.reset(configMap.current[`${pathname}/${formData.type}`]);
       dirty.current = true;
+      form.reset(defaultValues);
     }
   }
 
-  const onSubmit = (data: z.infer<typeof UsersSchema>) => {
-    form.reset({
-      username: "",
-    });
-  };
+  const onSubmit = (data: z.infer<typeof UsersSchema>) => {};
 
   return (
     <DrawerContent forceMount className="lg:w-[500px] sm:w-[700px] w-[320px]">
-      {JSON.stringify(drawerFormData)}
-
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormFields config={config} form={form} />
-          <Button type="submit" disabled={pending}>
-            测试
-          </Button>
-        </form>
-      </Form>
+      <DrawerTitle>{drawertitleMap[formData.type]}</DrawerTitle>
+      <div className="m-5">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit as any)}
+            className="space-y-6"
+          >
+            <FormFields config={config} form={form} />
+            <Button type="submit" disabled={pending}>
+              测试
+            </Button>
+          </form>
+        </Form>
+      </div>
     </DrawerContent>
   );
 };

@@ -2,18 +2,18 @@
 import type { FormConfig } from "@/interface"
 import { FormLabel, FormItem, FormControl ,FormField,FormMessage} from "@/components/ui/form"
 import { Input } from "./ui/input"
+import { useMemo } from "react"
 interface Props {
     config: FormConfig[],
     form:any
 }
 
 const FormFields = ({ config,form }: Props) => {
-    console.log(config);
-    
+    const nextConfig = useMemo(()=>config,[config])
     return (
         <>
             {
-                config.map((cof, index) => {
+                nextConfig.map((cof, index) => {
                     return <FormField
                     key={index}
                         control={form.control}
@@ -25,6 +25,7 @@ const FormFields = ({ config,form }: Props) => {
                                     <Input
                                         {...field}
                                         type="text"
+                                        disabled={cof.disabled}
                                         placeholder={cof.placeholder}
                                     />
                                 </FormControl>
