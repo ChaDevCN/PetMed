@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { PermissionEntity } from './permission.entity';
+import { Permission } from './permission.entity';
 import { Menu } from './menu.entity';
 
 @Entity()
@@ -24,14 +24,15 @@ export class Role {
   @UpdateDateColumn()
   updateTime: Date;
 
-  @ManyToMany(() => PermissionEntity)
+  @ManyToMany(() => Permission)
   @JoinTable({
     name: 'role_permission_relation',
   })
+  permissions: Permission[];
+
   @ManyToMany(() => Menu)
   @JoinTable({
-    name: 'role_menu_relation', // 假设存在 role_menu_relation 表来管理角色和菜单之间的关系
+    name: 'role_menu_relation',
   })
   menus: Menu[];
-  permissions: PermissionEntity[];
 }

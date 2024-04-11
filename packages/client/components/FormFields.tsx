@@ -20,7 +20,7 @@ const FormFields = ({ config,form }: Props) => {
                         name={cof.field}
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Email</FormLabel>
+                                <FormLabel className="text-[16px]">{cof.headerName}</FormLabel>
                                 <FormControl>
                                     <Input
                                         {...field}

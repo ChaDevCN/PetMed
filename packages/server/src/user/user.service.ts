@@ -4,7 +4,7 @@ import { EntityManager, In } from 'typeorm';
 import { UserLoginDto } from './dto/login-user.dto';
 import { Role } from './entities/role.entity';
 import { User } from './entities/user.entity';
-import { PermissionEntity } from './entities/permission.entity';
+import { Permission } from './entities/permission.entity';
 import { Menu } from './entities/menu.entity';
 @Injectable()
 export class UserService {
@@ -70,7 +70,7 @@ export class UserService {
       .getMany();
   }
   async findAllPermissions() {
-    return await this.entityManager.find(PermissionEntity);
+    return await this.entityManager.find(Permission);
   }
   async getAllRoles() {
     return await this.entityManager
@@ -86,7 +86,7 @@ export class UserService {
       where: { id: roleId },
     });
     const permissions = await this.entityManager.findByIds(
-      PermissionEntity,
+      Permission,
       permissionIds,
     );
 

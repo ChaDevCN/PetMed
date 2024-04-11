@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
-import { PermissionEntity } from 'src/user/entities/permission.entity';
+import { Permission } from 'src/user/entities/permission.entity';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()
@@ -31,7 +31,7 @@ export class PermissionGuard implements CanActivate {
       request.user.roles.map((item) => item.id),
     );
 
-    const permissions: PermissionEntity[] = roles.reduce((total, current) => {
+    const permissions: Permission[] = roles.reduce((total, current) => {
       total.push(...current.permissions);
       return total;
     }, []);

@@ -59,7 +59,7 @@ const Page = () => {
 
   return (
     <DrawerContent forceMount className="lg:w-[500px] sm:w-[700px] w-[320px]">
-      <DrawerTitle>{drawertitleMap[formData.type]}</DrawerTitle>
+      <DrawerTitle className="px-4 py-3">{drawertitleMap[formData.type]}</DrawerTitle>
       <div className="m-5">
         <Form {...form}>
           <form
@@ -67,9 +67,7 @@ const Page = () => {
             className="space-y-6"
           >
             <FormFields config={config} form={form} />
-            <Button type="submit" disabled={pending}>
-              测试
-            </Button>
+            {/* 提交按钮 */}
           </form>
         </Form>
       </div>

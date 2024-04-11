@@ -54,9 +54,11 @@ export const userColumn = [
     field: "roles",
     headerName: "角色",
     valueFormatter: (data: any, items?: any) => {
+      console.log(data);
+      
       return !data.roles.length
         ? "- -"
-        : data.roles.map((s: number, items?: any) => rolesMap[s]).toString();
+        : data.roles.map((s: any, items?: any) => rolesMap[s.id]).toString();
     },
     formType:'select',
     label:'角色'

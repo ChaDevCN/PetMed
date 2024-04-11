@@ -32,7 +32,7 @@ const Page = async ({ params: { key, type } }: Props) => {
   if (!result.find((s) => s.key === key && s.type === type)) {
     return redirect("/404");
   }
-  const data = await fetchData<any[]>({
+  const { data } = await fetchData<{ data: any[] }>({
     url,
     method,
   });
