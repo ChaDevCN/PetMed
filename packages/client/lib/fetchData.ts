@@ -19,7 +19,7 @@ interface Response <T> {
 const fetchData = async <T>({ url, method, data }: Props) => {
   // const cookieStore = cookies()
   // let token = cookieStore.get('user_token') || ''
-  const res = await fetch(`http://localhost:8081${url}`, {
+  const res = await fetch(`http://localhost:8082${url}`, {
     method: method || "GET",
     headers: {
       "Content-Type": "application/json",

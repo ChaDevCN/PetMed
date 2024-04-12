@@ -48,7 +48,7 @@ const FormFields = ({ config, form }: Props) => {
                   ) : cof.formType === "select" ? (
                     <Select onValueChange={field.onChange}  disabled={cof.disabled} >
                       <SelectTrigger>
-                        <SelectValue placeholder={roles[(cof.value[0]).name]}></SelectValue>
+                        <SelectValue placeholder={roles[(typeof (cof.value.toString()) === 'string' ? cof.value : cof.value[0].name)]}></SelectValue>
                       </SelectTrigger>
                       <SelectContent>
                         {cof.headerName.includes('角色')
