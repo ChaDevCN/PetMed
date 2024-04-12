@@ -1,4 +1,5 @@
-const roles = {
+import { RolesMap } from "@/interface"
+export const roles: RolesMap = {
   0: "CEO",
   1: "总经理",
   2: "运营总监",
@@ -15,7 +16,7 @@ const roles = {
   13: "康复治疗师",
   14: "专家",
   15: "药师",
-  16:'营养师',
-  17:'病历管理',
-  18:'急诊医生' 
+  16: '营养师',
+  17: '病历管理',
+  18: '急诊医生'
 };

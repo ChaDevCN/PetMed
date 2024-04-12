@@ -5,7 +5,8 @@ export const UsersSchema = z.object({
         message: "用户名不能为空"
     }).max(50, {
         message: '用户名最长不能超过23个字符'
-    })
+    }),
+    roles:z.union([z.array(z.string()), z.string({})])
 })
 
 export const RolesSchema = z.object({

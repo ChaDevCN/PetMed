@@ -1,6 +1,6 @@
 export interface FormConfig {
     formType: string
-    value: string
+    value: string | any[]
     placeholder?: string
     lable:string
     disabled: boolean

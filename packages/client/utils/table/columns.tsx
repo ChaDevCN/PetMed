@@ -7,7 +7,7 @@ import {
   PencilSquareIcon,
   EyeIcon,
 } from "@heroicons/react/20/solid";
-import { rolesMap } from "@/common/roles";
+import { roles } from "@/utils/map/config";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -58,7 +58,7 @@ export const userColumn = [
       
       return !data.roles.length
         ? "- -"
-        : data.roles.map((s: any, items?: any) => rolesMap[s.id]).toString();
+        : data.roles.map((s: any, items?: any) => roles[s.name]).toString();
     },
     formType:'select',
     label:'角色'
@@ -110,8 +110,8 @@ export const RolesColumn = [
   {
     field: "name",
     headerName: "角色名称",
-    valueFormatter: (data: any, items?: any) => rolesMap[data.name],
-    formType: "input",
+    valueFormatter: (data: any, items?: any) => roles[data.name],
+    formType: "select",
   },
   {
     field: "createTime",

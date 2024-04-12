@@ -1,14 +1,5 @@
 import { RolesMap } from "@/interface"
 
-export const rolesMap: RolesMap = {
-  0: '管理员',
-  1: '访客',
-  2: '普通用户',
-  3: '编辑',
-  4: '医生',
-  5: '审核',
-  6: '分析',
-};
 
 export const permissionsMap = {
   ViewUsers: '查看用户',

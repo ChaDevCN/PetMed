@@ -35,10 +35,7 @@ const Page = () => {
   });
   if (formData && formData?.columns && Array.isArray(formData.columns)) {
     const config = formData.columns
-      .filter(
-        ({ formType }: { formType: string | undefined }) =>
-          !!formType && formType === "input"
-      )
+      .filter(({ formType }: { formType: string | undefined }) => !!formType)
       .map((items: any) => {
         const value = formData[items.field];
         defaultValues[items.field] = value;
@@ -55,19 +52,24 @@ const Page = () => {
     }
   }
 
-  const onSubmit = (data: z.infer<typeof UsersSchema>) => {};
+  const onSubmit = (data: z.infer<typeof UsersSchema>) => {
+    console.log(data);
+    
+  };
 
   return (
     <DrawerContent forceMount className="lg:w-[500px] sm:w-[700px] w-[320px]">
-      <DrawerTitle className="px-4 py-3">{drawertitleMap[formData.type]}</DrawerTitle>
+      <DrawerTitle className="px-4 py-3">
+        {drawertitleMap[formData.type]}
+      </DrawerTitle>
       <div className="m-5">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit as any)}
             className="space-y-6"
           >
-            <FormFields config={config} form={form} />
-            {/* 提交按钮 */}
+            <FormFields config={config} form={form}  disabled={pending}/>
+           {formData.type === 'edit' && <Button type="submit" >提交</Button>}
           </form>
         </Form>
       </div>

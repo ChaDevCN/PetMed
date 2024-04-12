@@ -39,7 +39,7 @@ const Page = async ({ params: { key, type } }: Props) => {
   return (
     <div>
       <Tabs params={{ key, type }} />
-      <Card className="p-5 mt-10">
+      <Card className="p-5 mt-10 overflow-auto" style={{height:'calc(100vh - 230px)'}}>
         <Table params={{ key, type }} data={{ data, column }} />
       </Card>
       <DrawerPage />
