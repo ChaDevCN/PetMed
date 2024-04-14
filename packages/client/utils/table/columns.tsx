@@ -136,7 +136,7 @@ export const RolesColumn = [
             <EllipsisHorizontalIcon style={iconStyle} />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            {DropdownMenuContentConfig.map((items) => (
+            {DropdownMenuContentConfig.slice(0,2).map((items) => (
               <DropdownMenuItem
                 {...items}
                 items={res}

@@ -16,7 +16,7 @@ interface Response <T> {
   message:string
 }
 
-const fetchData = async <T>({ url, method, data }: Props) => {
+const fetchData = async <T>({ url, method, data,...rest }: Props) => {
   // const cookieStore = cookies()
   // let token = cookieStore.get('user_token') || ''
   const res = await fetch(`http://localhost:8082${url}`, {
@@ -26,6 +26,7 @@ const fetchData = async <T>({ url, method, data }: Props) => {
       // 'Authorization' : `Bearer ${token}`
     },
     body: JSON.stringify(data),
+    ...rest
   });
   switch (res.status) {
     case 401:

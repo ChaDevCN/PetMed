@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { LoginGuard } from 'src/common/login.guard';
 import { PermissionGuard } from 'src/common/permission.guard';
+import { MedicalManagementModule } from './medical-management/medical-management.module';
 const envFilePath = ['./config/.env.dev'];
 
 export const IS_DEV = process.env.RUNNING_ENV !== 'prod';
@@ -50,6 +51,7 @@ if (IS_DEV) {
       },
     }),
     UserModule,
+    MedicalManagementModule,
   ],
   controllers: [AppController],
   providers: [
