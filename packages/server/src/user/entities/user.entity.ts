@@ -6,8 +6,11 @@ import {
   ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Role } from './role.entity';
+import { UserInfo } from './userInfo.entity';
 
 @Entity()
 export class User {
@@ -28,19 +31,19 @@ export class User {
   })
   password: string;
 
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createTime: number;
+  @CreateDateColumn()
+  createTime: Date;
 
-  @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
-    onUpdate: 'CURRENT_TIMESTAMP',
-  })
-  updateTime: number;
+  @UpdateDateColumn()
+  updateTime: Date;
 
   @ManyToMany(() => Role)
   @JoinTable({
     name: 'user_role_relation',
   })
   roles: Role[];
+
+  @OneToOne(() => UserInfo, { cascade: true })
+  @JoinColumn()
+  userInfo: UserInfo;
 }
