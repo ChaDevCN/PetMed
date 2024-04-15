@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MedicalManagementService } from './medical-management.service';
+import { DoctorsResolver } from './doctors.resolver';
 
 @Module({
   imports: [
@@ -10,6 +11,6 @@ import { MedicalManagementService } from './medical-management.service';
       autoSchemaFile: 'src/medical-management/gql/medical-management.gql',
     }),
   ],
-  providers: [MedicalManagementService],
+  providers: [MedicalManagementService, DoctorsResolver],
 })
 export class MedicalManagementModule {}

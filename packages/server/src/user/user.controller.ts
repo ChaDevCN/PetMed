@@ -23,7 +23,7 @@ export class UserController {
     const token = this.jwtService.sign({
       user: {
         username: user.username,
-        roles: user.roles,
+        role: user.roles,
       },
     });
     return {

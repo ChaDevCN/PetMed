@@ -68,8 +68,8 @@ const Page = () => {
             onSubmit={form.handleSubmit(onSubmit as any)}
             className="space-y-6"
           >
-            <FormFields config={config} form={form}  disabled={pending}/>
-           {formData.type === 'edit' && <Button type="submit" >提交</Button>}
+            <FormFields config={config} form={form} />
+           {formData.type === 'edit' && <Button type="submit" disabled={pending} >提交</Button>}
           </form>
         </Form>
       </div>

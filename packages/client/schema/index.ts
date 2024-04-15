@@ -17,3 +17,16 @@ export const RolesSchema = z.object({
         message: "每个角色最少拥有一项权限"
     })
 })
+
+export const LoginSchema = z.object({
+    username:z.string().min(6,{
+        message: "用户名格式错误"
+    }).max(20,{
+        message: "用户名格式错误"
+    }),
+    password:z.string().min(8,{
+        message: "密码格式有误"
+    }).max(20,{
+        message: "密码格式有误"
+    }),
+})

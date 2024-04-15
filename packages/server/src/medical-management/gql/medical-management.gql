@@ -1,0 +1,50 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Schedule {
+  id: ID!
+  doctor: Doctors!
+  date: DateTime!
+  startTime: DateTime!
+  endTime: DateTime!
+  maxAppointments: Int!
+  shift: Shift!
+  status: Status!
+  remarks: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum Shift {
+  Morning
+  Afternoon
+  Evening
+}
+
+enum Status {
+  Available
+  Full
+  Cancelled
+}
+
+type Doctors {
+  id: Int!
+  department: String!
+  name: String!
+  commissionRate: Float!
+  gender: Int!
+  age: Int!
+  phoneNumber: Int!
+  status: Int!
+  experience: Int
+  introduction: String
+  schedules: [Schedule!]
+}
+
+type Query {
+  getAll: Doctors!
+}

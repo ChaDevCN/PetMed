@@ -28,7 +28,7 @@ const FormFields = ({ config, form }: Props) => {
     <>
       {nextConfig.map((cof, index) => {
         console.log(cof);
-
+        
         return (
           <FormField
             key={index}
@@ -36,17 +36,18 @@ const FormFields = ({ config, form }: Props) => {
             name={cof.field}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[16px]">{cof.headerName}</FormLabel>
+                <FormLabel className="text-[16px]">{cof.lable}</FormLabel>
                 <FormControl>
                   {cof.formType === "input" ? (
                     <Input
                       {...field}
                       type="text"
-                      disabled={cof.disabled}
+                      disabled={cof?.disabled}
                       placeholder={cof.placeholder}
+                      className={`${cof.className}`}
                     />
                   ) : cof.formType === "select" ? (
-                    <Select onValueChange={field.onChange}  disabled={cof.disabled} >
+                    <Select onValueChange={field.onChange}  disabled={cof?.disabled} >
                       <SelectTrigger>
                         <SelectValue placeholder={roles[(typeof (cof.value.toString()) === 'string' ? cof.value : cof.value[0].name)]}></SelectValue>
                       </SelectTrigger>
