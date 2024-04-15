@@ -10,6 +10,7 @@ import {
   BeforeInsert,
   UpdateDateColumn,
   CreateDateColumn,
+  ManyToOne,
 } from 'typeorm';
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Doctors } from './doctors.entity';
@@ -34,9 +35,9 @@ export class Department {
   @Column({ type: 'text', nullable: true })
   introduction: string;
 
-  @Field({ description: '科室主任姓名' })
-  @Column()
-  head: string;
+  @ManyToOne(() => Doctors) // 假设关联到 Doctor 实体
+  @Field(() => Doctors) // 定义 GraphQL 字段
+  headDoctor: Doctors;
 
   @Field(() => [Doctors], { description: '科室下的医生信息' })
   @OneToMany(() => Doctors, (doctor) => doctor.department)

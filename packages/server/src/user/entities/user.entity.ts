@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { Role } from './role.entity';
 import { UserInfo } from './userInfo.entity';
+import { Doctors } from 'src/medical-management/entities/doctors.entity';
 
 @Entity()
 export class User {
@@ -46,4 +47,8 @@ export class User {
   @OneToOne(() => UserInfo, { cascade: true })
   @JoinColumn()
   userInfo: UserInfo;
+
+  @OneToOne(() => Doctors, { cascade: true })
+  @JoinColumn()
+  doctor: Doctors;
 }
