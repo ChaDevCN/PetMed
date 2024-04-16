@@ -29,6 +29,11 @@ export class UserController {
         role: user.roles,
       },
     });
+    console.log({
+      token,
+      code: 1,
+    });
+
     return {
       token,
       code: 1,

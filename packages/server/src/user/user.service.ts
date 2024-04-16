@@ -28,6 +28,7 @@ export class UserService {
     if (user.password !== loginUserDto.password) {
       throw new HttpException('密码错误', HttpStatus.ACCEPTED);
     }
+    console.log(user);
 
     return user;
   }

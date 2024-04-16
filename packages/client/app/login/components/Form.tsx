@@ -47,18 +47,18 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
     setLoading(true);
-    loginActions<{
-      status: number;
-      data: string | Response;
-      error:any
-    }>(data).then((res) => {
-      if(res?.status !== 200){
-          toast({
-            title:'发生错误啦 !',
-            description: res?.data as string,
-            variant: 'destructive',
-          })}
-    }).catch((err)=>{
+    // loginActions<{
+    //   status: number;
+    //   data: string | Response;
+    //   error:any
+    // }>(data).then((res) => {
+    //   if(res?.status !== 200){
+    //       toast({
+    //         title:'发生错误啦 !',
+    //         description: res?.data as string,
+    //         variant: 'destructive',
+    //       })}
+    // }).catch((err)=>{
       // if (err?.error) {
       //   toast({
       //     title: '登录失败',
@@ -66,15 +66,16 @@ const LoginForm = () => {
       //     variant: 'destructive',
       //   });
       // }
-    })
+    // })
+    loginActions(data)
     setLoading(false);
   };
   return (
     <div>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit as any)}
-          // action={loginActions}
+          // onSubmit={form.handleSubmit(onSubmit as any)}
+          action={async ({username,password})=> await loginActions({username,password})}
           className="space-y-6"
         >
           <FormFields config={formConfig} form={form} />

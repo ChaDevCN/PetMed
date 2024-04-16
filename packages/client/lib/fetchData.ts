@@ -33,9 +33,12 @@ const fetchData = async <T>({ url, method, data,...rest }: Props) => {
       redirect("http://localhost:3000/login");
       return {} as any  // 暂时修复ts报错
   }
+
   if (res.status.toString()[0] !== '2') {
     throw new Error(`Status ${res.status}`);
   }
+  
+  
   return res.json() as T;
 };
 export default fetchData;

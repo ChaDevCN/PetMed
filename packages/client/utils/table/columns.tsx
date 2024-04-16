@@ -54,7 +54,6 @@ export const userColumn = [
     field: "roles",
     headerName: "角色",
     valueFormatter: (data: any, items?: any) => {
-      console.log(data);
       
       return !data.roles.length
         ? "- -"
