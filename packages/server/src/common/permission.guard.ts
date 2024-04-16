@@ -1,9 +1,10 @@
 import {
   CanActivate,
   ExecutionContext,
+  HttpException,
+  HttpStatus,
   Inject,
   Injectable,
-  ForbiddenException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
@@ -20,13 +21,10 @@ export class PermissionGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: Request = context.switchToHttp().getRequest();
-    /**
-     * （在 AppModule 里声明在 LoginGuard 之后），所以走到这里 request 里就有 user 对象了。
-     * **/
+
     if (!request.user) {
       return true;
     }
-
     const roles = await this.userService.findRolesByIds(
       request.user.roles.map((item) => item.id),
     );
@@ -36,15 +34,17 @@ export class PermissionGuard implements CanActivate {
       return total;
     }, []);
 
-    const requiredPermissions = this.reflector.getAllAndOverride<string[]>(
-      'require-permission',
-      [context.getClass(), context.getHandler()],
-    );
+    const requiredPermissions =
+      this.reflector.getAllAndOverride<string[]>('require-permission', [
+        context.getClass(),
+        context.getHandler(),
+      ]) || [];
+
     for (let i = 0; i < requiredPermissions.length; i++) {
       const curPermission = requiredPermissions[i];
       const found = permissions.find((item) => item.name === curPermission);
       if (!found) {
-        throw new ForbiddenException('您没有访问该接口的权限');
+        throw new HttpException('您没有访问该接口的权限', HttpStatus.FORBIDDEN);
       }
     }
 

@@ -8,11 +8,13 @@ import {
   Param,
   Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
+
 import { RequireLogin } from 'src/common/public-decorator';
+import { RequirePermission } from 'src/common/public-decorator';
 import { UserService } from './user.service';
 import { UserLoginDto } from './dto/login-user.dto';
-import { Request } from 'express';
 
 @Controller('user')
 export class UserController {
@@ -20,20 +22,28 @@ export class UserController {
   private jwtService: JwtService;
   constructor(private readonly userService: UserService) {}
 
+  @Get('auth')
+  @RequireLogin()
+  @RequirePermission('查询 bbb')
+  async auth(@Req() req: Request) {
+    console.log(req.headers, '6666');
+
+    return {
+      code: 1,
+    };
+  }
+
   @Post('login')
   async login(@Body() loginUser: UserLoginDto) {
     const user = await this.userService.login(loginUser);
+    console.log(loginUser);
+
     const token = this.jwtService.sign({
       user: {
         username: user.username,
-        role: user.roles,
+        roles: user.roles,
       },
     });
-    console.log({
-      token,
-      code: 1,
-    });
-
     return {
       token,
       code: 1,
