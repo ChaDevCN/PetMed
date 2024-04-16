@@ -12,11 +12,10 @@ export async function loginActions<T>(data: any) {
     method: "post",
     data,
   })
-  console.log(res.status);
   
-  if(res.status === 0){
+  if( res && res.status === 0){
     cookieStore.set('user_token',res.data.token, { secure: true })
-    redirect('/auth/user/1')
+    // redirect('/auth/user/1')
     return {
       status:200
     }

@@ -1,5 +1,4 @@
-import { NextResponse } from "next/server";
-import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 import "server-only";
 
 interface Props {
@@ -17,28 +16,22 @@ interface Response <T> {
 }
 
 const fetchData = async <T>({ url, method, data,...rest }: Props) => {
-  // const cookieStore = cookies()
-  // const token = cookieStore.get('user_token')?.value || ''
   
   const res = await fetch(`http://localhost:8082${url}`, {
     method: method || "GET",
     headers: {
       "Content-Type": "application/json",
-      // 'Authorization' : `Bearer ${token}`
     },
     body: JSON.stringify(data),
     ...rest
   });
-  
   switch (res.status) {
+    case 403:
+      redirect("http://localhost:3000/403");
+      return {} as any // 暂时修复ts报错
     case 401:
-      NextResponse.redirect("/403");
-      break;
-    case 401:
-      NextResponse.redirect("/login");
-      break;
-    default:
-      break;
+      redirect("http://localhost:3000/login");
+      return {} as any  // 暂时修复ts报错
   }
   if (res.status.toString()[0] !== '2') {
     throw new Error(`Status ${res.status}`);
