@@ -6,10 +6,13 @@ import {
   Get,
   Put,
   Param,
+  Req,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { RequireLogin } from 'src/common/public-decorator';
 import { UserService } from './user.service';
 import { UserLoginDto } from './dto/login-user.dto';
+import { Request } from 'express';
 
 @Controller('user')
 export class UserController {
@@ -31,15 +34,16 @@ export class UserController {
       code: 1,
     };
   }
-
   @Post('sign-up')
   async signUp(@Body() loginUser: UserLoginDto) {
     return this.userService.signUp(loginUser);
   }
   @Get('/all-users-details')
-  // @RequireLogin()
+  @RequireLogin()
   // @RequirePermission(Permission.ViewRoles)
-  async getAllUsersDetails() {
+  async getAllUsersDetails(@Req() request: Request) {
+    console.log(request);
+
     return await this.userService.findAllUsersWithRolesAndPermissions();
   }
   @Get('/all-permissions')

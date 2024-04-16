@@ -27,8 +27,6 @@ const FormFields = ({ config, form }: Props) => {
   return (
     <>
       {nextConfig.map((cof, index) => {
-        console.log(cof);
-        
         return (
           <FormField
             key={index}
@@ -41,7 +39,7 @@ const FormFields = ({ config, form }: Props) => {
                   {cof.formType === "input" ? (
                     <Input
                       {...field}
-                      type="text"
+                      type={cof.type || 'text'}
                       disabled={cof?.disabled}
                       placeholder={cof.placeholder}
                       className={`${cof.className}`}

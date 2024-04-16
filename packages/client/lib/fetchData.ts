@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { cookies } from 'next/headers'
 import "server-only";
 
 interface Props {
@@ -18,7 +18,8 @@ interface Response <T> {
 
 const fetchData = async <T>({ url, method, data,...rest }: Props) => {
   // const cookieStore = cookies()
-  // let token = cookieStore.get('user_token') || ''
+  // const token = cookieStore.get('user_token')?.value || ''
+  
   const res = await fetch(`http://localhost:8082${url}`, {
     method: method || "GET",
     headers: {
@@ -28,6 +29,7 @@ const fetchData = async <T>({ url, method, data,...rest }: Props) => {
     body: JSON.stringify(data),
     ...rest
   });
+  
   switch (res.status) {
     case 401:
       NextResponse.redirect("/403");
@@ -38,7 +40,7 @@ const fetchData = async <T>({ url, method, data,...rest }: Props) => {
     default:
       break;
   }
-  if (res.status !== 200) {
+  if (res.status.toString()[0] !== '2') {
     throw new Error(`Status ${res.status}`);
   }
   return res.json() as T;

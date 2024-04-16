@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+
+
 import LoginCard from "./components/Card";
 import LoginForm from "./components/Form";
 import login1 from "@/public/svg/login.img.svg";
