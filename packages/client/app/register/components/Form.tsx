@@ -5,7 +5,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import {loginActions} from "../actions"
 
 import FormFields from "@/components/FormFields";
 import { Form } from "@/components/ui/form";
@@ -62,12 +61,10 @@ const LoginForm = () => {
         <form
           // onSubmit={form.handleSubmit(onSubmit as any)}
           className="space-y-6"
-          action={loginActions}
         >
             <FormFields config={formConfig} form={form} />
             <Button className="w-full" type="submit" disabled={pending} >注册</Button>
         </form>
-       
       </Form>
     </div>
   );
