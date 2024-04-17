@@ -1,6 +1,6 @@
 "use client";
 import { LoginSchema } from "@/schema";
-import { any, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -12,7 +12,6 @@ import FormFields from "@/components/FormFields";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 const formConfig = [
   {
@@ -47,35 +46,23 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
     setLoading(true);
-    // loginActions<{
-    //   status: number;
-    //   data: string | Response;
-    //   error:any
-    // }>(data).then((res) => {
-    //   if(res?.status !== 200){
-    //       toast({
-    //         title:'发生错误啦 !',
-    //         description: res?.data as string,
-    //         variant: 'destructive',
-    //       })}
-    // }).catch((err)=>{
-      // if (err?.error) {
-      //   toast({
-      //     title: '登录失败',
-      //     description: err.error,
-      //     variant: 'destructive',
-      //   });
-      // }
-    // })
-    loginActions(data)
+   try {
+    await loginActions(data)
+   } catch (error) {
+    toast({
+      className: "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+      variant: "destructive",
+      title: "登录失败啦 ！",
+      description: "账号或密码错误",
+    });
+   }
     setLoading(false);
   };
   return (
     <div>
       <Form {...form}>
         <form
-          // onSubmit={form.handleSubmit(onSubmit as any)}
-          action={async ({username,password})=> await loginActions({username,password})}
+          onSubmit={form.handleSubmit(onSubmit as any)}
           className="space-y-6"
         >
           <FormFields config={formConfig} form={form} />

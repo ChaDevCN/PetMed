@@ -24,13 +24,10 @@ export class UserController {
 
   @Get('auth')
   @RequireLogin()
-  @RequirePermission('查询 bbb')
   async auth(@Req() req: Request) {
-    console.log(req.headers, '6666');
-
-    return {
-      code: 1,
-    };
+    return await this.userService.findUserByUsername(
+      (req.headers.user as any).user.username,
+    );
   }
 
   @Post('login')
@@ -57,8 +54,6 @@ export class UserController {
   @RequireLogin()
   // @RequirePermission(Permission.ViewRoles)
   async getAllUsersDetails(@Req() request: Request) {
-    console.log(request);
-
     return await this.userService.findAllUsersWithRolesAndPermissions();
   }
   @Get('/all-permissions')

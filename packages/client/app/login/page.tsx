@@ -9,6 +9,7 @@ import login1 from "@/public/svg/login.img.svg";
 const Page = () => {
   return (
     <main className="w-[100vw] h-[100vh] bg-custom-gradient relative overflow-hidden login-main">
+        {/* <input type="hidden" name="csrfToken" value={csrfToken} /> */}
       <div className="flex w-full h-full">
         <div className="flex-1 h-full bg-[#ecefff]">
           <div className="hidden md:block w-[40%] ml-[15%] my-auto mt-[20%]">

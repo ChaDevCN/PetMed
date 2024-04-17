@@ -62,7 +62,13 @@ export class UserService {
       },
     });
   }
-
+  async findUserByUsername(username: string) {
+    return await this.entityManager
+      .createQueryBuilder(User, 'user')
+      .leftJoinAndSelect('user.roles', 'role')
+      .where('user.username = :username', { username })
+      .getOne();
+  }
   async findAllUsersWithRolesAndPermissions() {
     return await this.entityManager
       .createQueryBuilder(User, 'user')

@@ -1,5 +1,6 @@
+'use server'
 import { redirect } from 'next/navigation'
-import "server-only";
+import { auth } from '@/app/auth';
 
 interface Props {
   url: string;
@@ -7,6 +8,7 @@ interface Props {
   data?: {
     [key: string]: any;
   };
+  headers?:any
 }
 interface Response <T> {
   data:T
@@ -14,16 +16,17 @@ interface Response <T> {
   success:boolean
   message:string
 }
-
-const fetchData = async <T>({ url, method, data,...rest }: Props) => {
+const fetchData = async <T>({ url, method, data,headers}: Props) => {
+  const session:any = await auth()
   
   const res = await fetch(`http://localhost:8082${url}`, {
     method: method || "GET",
     headers: {
       "Content-Type": "application/json",
+      'Authorization':`Bearer ${session?.user.token}`
     },
     body: JSON.stringify(data),
-    ...rest
+    // ...headers
   });
   switch (res.status) {
     case 403:

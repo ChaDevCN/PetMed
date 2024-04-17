@@ -1,58 +1,55 @@
 
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import fetchData from '@/lib/fetchData';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+    secret:'123123213213',
     pages: {
         signIn: '/login',
     },
     providers: [
         Credentials({
             authorize: async (credentials) => {
-                const { username, password } = credentials
                 const data = await fetch('http://localhost:8082/user/login', {
                     method: 'post',
-                    body: JSON.stringify({
-                        username,
-                        password
-                    })
+                    body: JSON.stringify(credentials),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 }).then(res => res.json())
-                if (data.code === 0) {
+
+                if (data?.data.code !== 1) {
+
                     return null
+
                 }
 
-                return { id: data.code }
-                // const res= await fetch({
-                //     url: '/user/login',
-                //     method: 'post',
-                //     body:{
-                //         data: { username, password }
-                //     }
-                // })
-                // if(code === 0){
-                //     return {
-                //         id: token
-                //     }
-                // }else{
-                //     return null
-                // }
-
+                return { id: data.data.token }
             }
         }),
     ],
     callbacks: {
-        jwt: async () => {
-
+        jwt: async ({ token, ...rest }) => {
+            const user = await fetch(
+                'http://localhost:8082/user/auth',
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token.sub}`
+                    }
+                }
+            ).then(res => res.json())
+            
             return {
-                username: 'liuchang'
+                ...user.data,
+                ...token
             }
         },
         session: async ({ session, token }) => {
+
             if (session.user && token?.sub) {
-                session.user.token = token.sub
+                (session.user as any).token = token.sub
             }
             return session
-        }
+        },
     }
 });

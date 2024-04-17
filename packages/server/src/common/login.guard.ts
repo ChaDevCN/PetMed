@@ -38,8 +38,6 @@ export class LoginGuard implements CanActivate {
       context.getHandler(),
     ]);
 
-    console.log(requireLogin, '55');
-
     if (!requireLogin) {
       return true;
     }
@@ -53,7 +51,7 @@ export class LoginGuard implements CanActivate {
     try {
       const token = authorization.split(' ')[1];
       const data = this.jwtService.verify(token);
-
+      request.headers.user = data;
       request.user = data.user;
       return true;
     } catch (e) {
