@@ -1,6 +1,6 @@
 import fetchData from "@/lib/fetchData";
 
-import type { Params } from "@/interface";
+import type { Params, UserData } from "@/interface";
 import { Card } from "@/components/ui/card";
 import {
   Table,
@@ -11,22 +11,17 @@ import {
   TableCell,
 } from "@/components/ui/table";
 interface Data {
-  // data: UserData[];
+  data: UserData[];
   column?: any[];
-  url: string;
-  method: string;
 }
 const Tables = async ({
-  data: { column, url, method },
+  data: { column, data },
 }: {
   params?: Params;
   data: Data;
 }) => {
   
-  const { data } = await fetchData<{ data: any[] }>({
-    url,
-    method,
-  });
+
   
   return (
     <Card className="p-5">

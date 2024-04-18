@@ -13,6 +13,12 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
 } from "@/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 const iconStyle = { width: "1.25rem", height: "1.25rem", color: "#7a3bed" };
 const DropdownMenuItem = dynamic(
   () => import("../../app/auth/components/DropdownMenuItem"),
@@ -48,19 +54,18 @@ export const userColumn = [
     headerName: "用户名",
     valueFormatter: (data: any, items?: any) => data.username,
     formType: "input",
-    label:'用户名'
+    label: "用户名",
   },
   {
     field: "roles",
     headerName: "角色",
     valueFormatter: (data: any, items?: any) => {
-      
       return !data.roles.length
         ? "- -"
         : data.roles.map((s: any, items?: any) => roles[s.name]).toString();
     },
-    formType:'select',
-    label:'角色'
+    formType: "select",
+    label: "角色",
   },
   {
     field: "createTime",
@@ -113,6 +118,35 @@ export const RolesColumn = [
     formType: "select",
   },
   {
+    field: "permissions",
+    headerName: "拥有权限",
+    valueFormatter: (data: any, items?: any) => {
+      return !data.permissions.length ? (
+        "- -"
+      ) : (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="max-w-40 truncate ...">
+                {data.permissions
+                  .map((s: any, items?: any) => s.name)
+                  .toString()}
+              </div>
+            </TooltipTrigger>
+            <TooltipContent className="max-w-50 p-3 bg-black">
+              <div>
+                {data.permissions
+                  .map((s: any, items?: any) => s.name)
+                  .toString()}
+              </div>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+    },
+    formType:'Checkbox '
+  },
+  {
     field: "createTime",
     headerName: "创建时间",
     valueFormatter: (data: any, items?: any) =>
@@ -135,7 +169,7 @@ export const RolesColumn = [
             <EllipsisHorizontalIcon style={iconStyle} />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            {DropdownMenuContentConfig.slice(0,2).map((items) => (
+            {DropdownMenuContentConfig.slice(0, 2).map((items) => (
               <DropdownMenuItem
                 {...items}
                 items={res}
@@ -147,5 +181,14 @@ export const RolesColumn = [
         </DropdownMenu>
       );
     },
+  },
+];
+
+export const DoctorsColumn = [
+  {
+    field: "id",
+    width: 100,
+    headerName: "序号",
+    valueFormatter: (data: any, items?: any) => data.id,
   },
 ];

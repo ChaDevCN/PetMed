@@ -38,7 +38,7 @@ const fetchData = async <T>({ url, method, data,headers}: Props) => {
   }
 
   if (res.status.toString()[0] !== '2') {
-    throw new Error(`Status ${res.status}`);
+    return new Promise((r,j)=>j(res))
   }
   
   

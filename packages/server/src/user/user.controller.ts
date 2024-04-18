@@ -16,6 +16,7 @@ import { RequirePermission } from 'src/common/public-decorator';
 import { UserService } from './user.service';
 import { UserLoginDto } from './dto/login-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -81,5 +82,19 @@ export class UserController {
   @Post('register')
   async register(@Body() createUser: CreateUserDto) {
     return await this.userService.register(createUser);
+  }
+  /* 这里应该同时校验token中的user 和 id ！！！！！！！**/
+  @Put(':id')
+  @RequireLogin()
+  async updateUser(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return await this.userService.updateUser(id, updateUserDto);
+  }
+  @Get('permissions')
+  @RequireLogin()
+  async getPermissions() {
+    return await this.userService.getPermissions();
   }
 }

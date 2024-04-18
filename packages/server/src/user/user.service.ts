@@ -8,6 +8,7 @@ import { Permission } from './entities/permission.entity';
 import { Menu } from './entities/menu.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserInfo } from './entities/userInfo.entity';
+import { UpdateUserDto } from './dto/update-user.dto';
 @Injectable()
 export class UserService {
   @InjectEntityManager()
@@ -30,7 +31,6 @@ export class UserService {
     if (user.password !== loginUserDto.password) {
       throw new HttpException('密码错误', HttpStatus.ACCEPTED);
     }
-    console.log(user);
 
     return user;
   }
@@ -151,7 +151,7 @@ export class UserService {
       }
 
       // Start transaction
-      await this.entityManager.transaction(
+      const res = await this.entityManager.transaction(
         async (transactionalEntityManager) => {
           const user = new User();
           const userInfo = new UserInfo();
@@ -162,6 +162,7 @@ export class UserService {
           user.userInfo = userInfo;
 
           const data = await transactionalEntityManager.save(User, user);
+
           return {
             code: 0,
             message: '用户注册成功',
@@ -169,9 +170,59 @@ export class UserService {
           };
         },
       );
+      return res;
     } catch (error) {
       console.error('Registration error:', error);
       return { code: 1, message: '出错了，注册过程中发生错误' };
+    }
+  }
+
+  async updateUser(id, updateUser: UpdateUserDto) {
+    const { username, password, ...updateData } = updateUser;
+
+    try {
+      const user = await this.entityManager.findOne(User, {
+        where: { id },
+        relations: ['userInfo'],
+      });
+
+      if (!user) {
+        return { code: 1, message: '用户不存在' };
+      }
+
+      // 使用 merge 更新 User 实体
+      const nextUser = this.entityManager.merge(User, user, {
+        username,
+        password,
+      });
+
+      // 如果 userInfo 是关联对象，可能需要单独处理
+      if (nextUser.userInfo) {
+        if (!user.userInfo) {
+          user.userInfo = new UserInfo();
+        }
+        this.entityManager.merge(UserInfo, user.userInfo, updateData);
+      }
+
+      await this.entityManager.save(user);
+      return { code: 0, message: '用户信息更新成功' };
+    } catch (error) {
+      console.error('Update error:', error);
+      return { code: 1, message: '更新过程中发生错误' };
+    }
+  }
+  async getPermissions() {
+    try {
+      const permissions = this.entityManager.find(Permission);
+      return {
+        data: permissions,
+        code: 0,
+      };
+    } catch (err) {
+      return {
+        code: 1,
+        message: `查询失败了,${err?.message}`,
+      };
     }
   }
 }

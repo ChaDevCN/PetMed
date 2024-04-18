@@ -1,7 +1,7 @@
 import fetchData from "@/lib/fetchData";
 import type { UserData } from "@/interface";
 
-import Table from "./Table";
+import Table from "../../../components/Table";
 
 const Page = async () => {
   // const data = await fetchData<UserData[]>({

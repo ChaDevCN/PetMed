@@ -44,7 +44,7 @@ export const RegisterSchema = z.object({
     }).max(20,{
         message: "密码格式有误"
     }),
-    email: z.string().min(8).max(20).regex(emailRegex, {
+    email: z.string().min(8).max(50).regex(emailRegex, {
         message: '邮箱格式有误',
     }),
     nickName:z.string().min(2,{
