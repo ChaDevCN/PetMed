@@ -1,7 +1,8 @@
-import { View, Text } from '@tarojs/components'
-import Taro, { useLoad } from '@tarojs/taro'
+import { View } from '@tarojs/components'
+import  { useLoad } from '@tarojs/taro'
 import Card from '@/components/Card'
 import docter from "@/public/svg/docter.svg"
+import { Button } from "@taroify/core"
 import './index.less'
 
 const swiperConfig = [
@@ -22,7 +23,8 @@ export default function Index() {
 
   return (
     <View className='index'>
-      <Card swiperConfig={swiperConfig} />
+      <Card swiperConfig={[...swiperConfig,...swiperConfig]} />
+      <Button>test</Button>
     </View>
   )
 }
