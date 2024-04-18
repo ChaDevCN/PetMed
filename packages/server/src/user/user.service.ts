@@ -6,6 +6,8 @@ import { Role } from './entities/role.entity';
 import { User } from './entities/user.entity';
 import { Permission } from './entities/permission.entity';
 import { Menu } from './entities/menu.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UserInfo } from './entities/userInfo.entity';
 @Injectable()
 export class UserService {
   @InjectEntityManager()
@@ -137,5 +139,39 @@ export class UserService {
     // await this.entityManager.save(Menu, menu5Children);
 
     return this.entityManager.getTreeRepository(Menu).findTrees();
+  }
+  async register(createUser: CreateUserDto) {
+    const { password, username, nickName, email } = createUser;
+    try {
+      const userExists = await this.entityManager.findOne(User, {
+        where: { username },
+      });
+      if (userExists) {
+        return { code: 1, message: '注册失败，用户名已存在' };
+      }
+
+      // Start transaction
+      await this.entityManager.transaction(
+        async (transactionalEntityManager) => {
+          const user = new User();
+          const userInfo = new UserInfo();
+          user.username = username;
+          user.password = password;
+          userInfo.nickName = nickName;
+          userInfo.email = email;
+          user.userInfo = userInfo;
+
+          const data = await transactionalEntityManager.save(User, user);
+          return {
+            code: 0,
+            message: '用户注册成功',
+            data,
+          };
+        },
+      );
+    } catch (error) {
+      console.error('Registration error:', error);
+      return { code: 1, message: '出错了，注册过程中发生错误' };
+    }
   }
 }

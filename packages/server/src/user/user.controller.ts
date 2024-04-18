@@ -15,6 +15,7 @@ import { RequireLogin } from 'src/common/public-decorator';
 import { RequirePermission } from 'src/common/public-decorator';
 import { UserService } from './user.service';
 import { UserLoginDto } from './dto/login-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -53,7 +54,7 @@ export class UserController {
   @Get('/all-users-details')
   @RequireLogin()
   // @RequirePermission(Permission.ViewRoles)
-  async getAllUsersDetails(@Req() request: Request) {
+  async getAllUsersDetails() {
     return await this.userService.findAllUsersWithRolesAndPermissions();
   }
   @Get('/all-permissions')
@@ -75,5 +76,10 @@ export class UserController {
   @Get('/all-menu')
   async init() {
     return this.userService.menu();
+  }
+
+  @Post('register')
+  async register(@Body() createUser: CreateUserDto) {
+    return await this.userService.register(createUser);
   }
 }
