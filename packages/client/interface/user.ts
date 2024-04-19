@@ -17,7 +17,8 @@ export interface Tab<T extends z.ZodObject<any, any, any>> {
 }
 export interface Section<T extends z.ZodObject<any, any, any>> {
   type: string;
-  tabs: Tab<T>[];
+  tabs: Tab<T>[] | [];
+  [key:string]:any
 }
 
 export interface Auth<T extends z.ZodObject<any, any, any> = any> {
