@@ -13,7 +13,11 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserService {
   @InjectEntityManager()
   entityManager: EntityManager;
-
+  constructor(private entityManagers: EntityManager) {
+    if (entityManagers) {
+      this.entityManager = entityManagers;
+    }
+  }
   async login(loginUserDto: UserLoginDto) {
     const user = await this.entityManager.findOne(User, {
       where: {
@@ -224,5 +228,14 @@ export class UserService {
         message: `查询失败了,${err?.message}`,
       };
     }
+  }
+  async findUserByRoleId(roleId: number) {
+    return await this.entityManager
+      .createQueryBuilder(User, 'user')
+      .leftJoinAndSelect('user.roles', 'role')
+      .leftJoinAndSelect('user.userInfo', 'userInfo')
+      .leftJoinAndSelect('user.doctor', 'doctor')
+      .where('role.id = :roleId', { roleId })
+      .getMany();
   }
 }

@@ -22,7 +22,7 @@ export class PermissionGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: Request = context.switchToHttp().getRequest();
 
-    if (!request.user) {
+    if (!request?.user) {
       return true;
     }
     const roles = await this.userService.findRolesByIds(

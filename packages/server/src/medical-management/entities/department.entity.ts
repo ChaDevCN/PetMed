@@ -12,34 +12,26 @@ import {
   CreateDateColumn,
   ManyToOne,
 } from 'typeorm';
-import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Doctors } from './doctors.entity';
 
 @Entity()
-@ObjectType()
 @Tree('closure-table')
 export class Department {
   @PrimaryGeneratedColumn()
-  @Field(() => Int)
   id: number;
 
-  @Field({ description: '科室名称' })
   @Column()
   name: string;
 
-  @Field({ description: '科室编号' })
   @Column()
   code: string;
 
-  @Field({ nullable: true, description: '科室介绍' })
   @Column({ type: 'text', nullable: true })
   introduction: string;
 
   @ManyToOne(() => Doctors) // 假设关联到 Doctor 实体
-  @Field(() => Doctors) // 定义 GraphQL 字段
   headDoctor: Doctors;
 
-  @Field(() => [Doctors], { description: '科室下的医生信息' })
   @OneToMany(() => Doctors, (doctor) => doctor.department)
   doctors: Doctors[];
 

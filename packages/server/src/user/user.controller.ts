@@ -97,4 +97,22 @@ export class UserController {
   async getPermissions() {
     return await this.userService.getPermissions();
   }
+  @Get('role/:roleId')
+  @RequireLogin()
+  async findUserByRoleId(@Param('roleId') id: string) {
+    const transformId = Number(id);
+    try {
+      const data = await this.userService.findUserByRoleId(transformId);
+      return {
+        data,
+        code: 0,
+      };
+    } catch (error) {
+      return {
+        data: [],
+        code: 1,
+        message: '查询失败了',
+      };
+    }
+  }
 }
