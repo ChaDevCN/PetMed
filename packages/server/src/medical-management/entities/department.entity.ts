@@ -7,7 +7,7 @@ import {
   Tree,
   TreeChildren,
   TreeParent,
-  BeforeInsert,
+  Generated,
   UpdateDateColumn,
   CreateDateColumn,
   ManyToOne,
@@ -24,6 +24,7 @@ export class Department {
   name: string;
 
   @Column()
+  @Generated('uuid')
   code: string;
 
   @Column({ type: 'text', nullable: true })
@@ -46,18 +47,4 @@ export class Department {
 
   @UpdateDateColumn()
   updateTime: Date;
-
-  @BeforeInsert()
-  async generateCode() {
-    const parentCode = this.parent ? this.parent.code : '';
-    const lastChild = this.children[this.children.length - 1];
-    const lastChildCode = lastChild ? lastChild.code : parentCode + '000';
-
-    const lastNumStr = lastChildCode.slice(parentCode.length);
-    const lastNum = parseInt(lastNumStr); // 将字符串转换为数字
-    const newNum = lastNum + 1; // 自增1
-    const newNumStr = newNum.toString().padStart(lastNumStr.length, '0');
-
-    this.code = parentCode + newNumStr;
-  }
 }

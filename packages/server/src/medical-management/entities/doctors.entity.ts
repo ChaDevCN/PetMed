@@ -5,16 +5,20 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Schedule } from './schedule.entity';
+import { Department } from './department.entity';
 
 @Entity()
 export class Doctors {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ comment: '科室', length: 20 })
-  department: string;
+  @ManyToOne(() => Department, (department) => department.doctors)
+  @JoinColumn({ name: 'departmentId' })
+  department: Department;
 
   @Column({ comment: '医生姓名', length: 50 })
   name: string;

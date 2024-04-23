@@ -1,4 +1,5 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Inject } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager, In } from 'typeorm';
 import { UserLoginDto } from './dto/login-user.dto';
@@ -9,13 +10,22 @@ import { Menu } from './entities/menu.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserInfo } from './entities/userInfo.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Request } from 'express';
 @Injectable()
 export class UserService {
   @InjectEntityManager()
   entityManager: EntityManager;
-  constructor(private entityManagers: EntityManager) {
+  @Inject(JwtService)
+  private jwtService: JwtService;
+  constructor(
+    private entityManagers: EntityManager,
+    private jwt?: JwtService,
+  ) {
     if (entityManagers) {
       this.entityManager = entityManagers;
+    }
+    if (jwt) {
+      this.jwtService = jwt;
     }
   }
   async login(loginUserDto: UserLoginDto) {
@@ -72,6 +82,7 @@ export class UserService {
     return await this.entityManager
       .createQueryBuilder(User, 'user')
       .leftJoinAndSelect('user.roles', 'role')
+      .leftJoinAndSelect('user.doctor', 'doctor')
       .where('user.username = :username', { username })
       .getOne();
   }
@@ -237,5 +248,12 @@ export class UserService {
       .leftJoinAndSelect('user.doctor', 'doctor')
       .where('role.id = :roleId', { roleId })
       .getMany();
+  }
+  async getInfoBytoken(req: Request) {
+    const authorization = req.headers.authorization;
+    const token = authorization.split(' ')[1];
+    const data = this.jwtService.verify(token);
+    const result = await this.findUserByUsername(data.user.username);
+    return result;
   }
 }

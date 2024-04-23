@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import img from "@/public/svg/404.svg";
+import "./globals.css";
 const Page = () => (
   <div className="w-[100%] h-full  flex justify-center mt-20">
     <div>
