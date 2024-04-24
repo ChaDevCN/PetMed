@@ -14,11 +14,13 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectGroup,
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { roles } from "@/utils/map/config";
 import { Input } from "./ui/input";
+import { SelectLabel } from "@radix-ui/react-select";
 interface Props {
   config: FormConfig[];
   form: any;
@@ -35,8 +37,8 @@ const FormFields = ({ config, form }: Props) => {
             control={form.control}
             name={cof.field}
             render={({ field }) => (
-              <FormItem className={cof.formType === 'redio' ? 'flex items-center gap-3 py-3' :''}>
-                <FormLabel className={cof.formType === 'redio' ? 'mt-[8px] text-[16px]' :'text-[16px]'}>{cof.lable}</FormLabel>
+              <FormItem className={`${cof.formType === 'redio' ? 'flex items-center gap-3 py-3' :''} pt-2`}>
+                <FormLabel className={`${cof.formType === 'redio' ? 'mt-[8px] text-[16px]' :'text-[16px]'} `}>{cof.lable}</FormLabel>
                 <FormControl>
                   {cof.formType === "input" ? (
                     <Input
@@ -63,22 +65,33 @@ const FormFields = ({ config, form }: Props) => {
                         ></SelectValue>
                       </SelectTrigger>
                       <SelectContent>
-                        {cof.headerName.includes("角色")
+                        {cof?.headerName?.includes("角色")
                           ? Object.keys(roles).map((item: any) => (
                               <SelectItem key={item} value={item}>
                                 {roles[item]}
                               </SelectItem>
                             ))
-                          : null}
+                          : cof?.dataType === 'group' ? <>
+                            {
+                              cof.data.map((item:any)=><SelectGroup key={item.id} className="px-2">
+                              <SelectLabel className="font-bold">{item.name}</SelectLabel>
+                              {
+                                item.children.length > 0 && item.children.map((subItem:any)=> <SelectItem key={subItem.id} value={subItem.name}>{subItem.name}</SelectItem> )
+                              }
+                            </SelectGroup>)
+                            }
+                            </>: null}
                       </SelectContent>
                     </Select>
                   ) : cof.formType === "redio" ? (
-                    <RadioGroup defaultValue={cof.value as string} className="flex">
+                    <RadioGroup  onValueChange={field.onChange} defaultValue={cof.value as string} className="flex">
                       {cof.data.map((items: any) => (
-                        <Fragment key={items.value}>
-                          <RadioGroupItem value={items.key} id="r2" />
-                          <Label htmlFor="r2">{items.label}</Label>
-                        </Fragment>
+                        <FormItem   key={items.value} className="flex items-center gap-1">
+                          <FormControl>
+                          <RadioGroupItem value={items.key}  />
+                          </FormControl>
+                          <FormLabel  className="mt-0" style={{marginTop:'0'}}>{items.label}</FormLabel>
+                        </FormItem  >
                       ))}
                     </RadioGroup>
                   ) : null}
