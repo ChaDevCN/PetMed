@@ -13,6 +13,17 @@ export const uploadActions  = async(data:FormData) => {
         redirect:'follow'
         // ...headers
       });
-      console.log(res);
+      console.log(res.body);
       return res
+}
+
+export const addDoctor = async(data:any) => {
+  const res  = await fetchData({
+    url:'/medical-management/add-doctor',
+    method:'POSt',
+    data
+  })
+  console.log(res,res.exception.response.message);
+
+  return res
 }

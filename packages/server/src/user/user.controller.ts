@@ -7,6 +7,7 @@ import {
   Put,
   Param,
   Req,
+  OnModuleInit,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
@@ -19,11 +20,15 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
-export class UserController {
+export class UserController implements OnModuleInit {
   @Inject(JwtService)
   private jwtService: JwtService;
   constructor(private readonly userService: UserService) {}
-
+  onModuleInit() {
+    setInterval(() => {
+      this.userService.keepConnectionAlive();
+    }, 60000);
+  }
   @Get('auth')
   @RequireLogin()
   async auth(@Req() req: Request) {

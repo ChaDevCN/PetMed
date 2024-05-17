@@ -37,9 +37,9 @@ const fetchData = async <T>({ url, method, data,headers}: Props) => {
       return {} as any  // 暂时修复ts报错
   }
 
-  if (res.status.toString()[0] !== '2') {
-    return new Promise((r,j)=>j(res))
-  }
+  // if (res.status.toString()[0] !== '2') {
+  //   return new Promise((r,j)=>j(res))
+  // }
   
   
   return res.json() as T;

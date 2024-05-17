@@ -7,6 +7,7 @@ import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
 import { Department } from './entities/department.entity';
 import { JwtService } from '@nestjs/jwt';
+import { CreateDoctorDTO } from './dto/create-doctor';
 
 @Injectable()
 export class MedicalManagementService {
@@ -150,4 +151,5 @@ export class MedicalManagementService {
       doctor,
     };
   }
+  async addDoctor(createDoctor: CreateDoctorDTO) {}
 }

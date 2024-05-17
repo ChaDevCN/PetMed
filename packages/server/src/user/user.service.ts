@@ -256,4 +256,12 @@ export class UserService {
     const result = await this.findUserByUsername(data.user.username);
     return result;
   }
+  async signup(username: string) {
+    const pwd = '';
+  }
+  async keepConnectionAlive() {
+    try {
+      await this.entityManager.query('SELECT 1');
+    } catch (error) {}
+  }
 }

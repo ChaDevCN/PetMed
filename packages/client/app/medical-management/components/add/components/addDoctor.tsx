@@ -6,6 +6,7 @@ import { Form } from "@/components/ui/form";
 import { CreateDoctorSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { addDoctor } from "./actions";
 
 interface Props {
   config: any[];
@@ -19,8 +20,9 @@ const AddDoctor = (props: Props) => {
       username: "",
     },
   });
-  const onsubmit = (data: any) => {
-    console.log("******", data);
+  const onsubmit = async(data: any) => {
+    const res = await addDoctor(data)
+    console.log("******", res);
   };
   return (
     <Card className="px-10 py-5">
