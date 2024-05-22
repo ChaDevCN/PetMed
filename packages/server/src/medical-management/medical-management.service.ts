@@ -151,5 +151,7 @@ export class MedicalManagementService {
       doctor,
     };
   }
-  async addDoctor(createDoctor: CreateDoctorDTO) {}
+  async addDoctor(createDoctor: CreateDoctorDTO) {
+    console.log(createDoctor);
+  }
 }

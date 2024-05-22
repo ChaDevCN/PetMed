@@ -11,6 +11,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UserInfo } from './entities/userInfo.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Request } from 'express';
+import { roleGroups } from 'src/common/roleGroups';
 @Injectable()
 export class UserService {
   @InjectEntityManager()
@@ -263,5 +264,28 @@ export class UserService {
     try {
       await this.entityManager.query('SELECT 1');
     } catch (error) {}
+  }
+
+  async findUserByGrouPs(group: string) {
+    const formatGroup = parseInt(group);
+    const groups = roleGroups[formatGroup];
+    if (groups && Array.isArray(groups)) {
+      const res = [];
+      const processedUsers = {};
+
+      for (const role of groups) {
+        const users = await this.findUserByRoleId(role);
+        for (const user of users) {
+          if (!processedUsers[user.id]) {
+            // 检查是否已经处理过该用户
+            processedUsers[user.id] = true;
+            res.push(user);
+          }
+        }
+      }
+      return res;
+    } else {
+      return null;
+    }
   }
 }

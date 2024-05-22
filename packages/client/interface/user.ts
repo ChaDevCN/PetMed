@@ -33,3 +33,6 @@ export interface Params {
 export interface RolesMap {
   [key: number]: string;
 }
+export interface RoleGroupsMap {
+  [key:string]:number[]
+}

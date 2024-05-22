@@ -6,7 +6,7 @@ import { Form } from "@/components/ui/form";
 import { CreateDoctorSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { addDoctor } from "./actions";
+import { addDoctor,findUsersByRoleId } from "./actions";
 
 interface Props {
   config: any[];
@@ -14,6 +14,7 @@ interface Props {
 
 const AddDoctor = (props: Props) => {
   const { config } = props;
+
   const form = useForm({
     resolver: zodResolver(CreateDoctorSchema),
     defaultValues: {

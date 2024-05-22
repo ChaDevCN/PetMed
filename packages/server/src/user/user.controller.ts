@@ -8,6 +8,7 @@ import {
   Param,
   Req,
   OnModuleInit,
+  Query,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
@@ -119,5 +120,12 @@ export class UserController implements OnModuleInit {
         message: '查询失败了',
       };
     }
+  }
+  @Get('groups/:group')
+  @RequireLogin()
+  async findUserByGrouPs(@Param('group') group: string) {
+    console.log(group);
+
+    return await this.userService.findUserByGrouPs(group);
   }
 }

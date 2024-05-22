@@ -8,10 +8,13 @@ const toolbarConfig = [
         link:'/medical-management/add-doctor',
     }
 ]
-const DoctorResourcesPage = () => {
+const DoctorResourcesPage = async() => {
+
+  
   return (
     <div>
       <ActionToolbar toolbarConfig={toolbarConfig} />
+      
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import AddDoctor from "./components/addDoctor";
 import Upload from "./components/upload";
 
-const AddPage = ({ params, data }: { params: "add-doctor"; data: any }) => {
+const AddPage = ({ params, data ,users}: { params: "add-doctor"; data: any,users:any }) => {
   const AddDoctorFormConfig = [
     {
       formType: "input",
@@ -77,8 +77,8 @@ const AddPage = ({ params, data }: { params: "add-doctor"; data: any }) => {
   }
 
   return (
-    <div>
-      <div className="grid lg:grid-cols-2">
+    <div className="flex items-center lg:justify-start justify-center w-full h-full">
+      <div className="grid lg:grid-cols-2 w-full">
         <AddDoctor config={addMap[params]} />
         {/* <Upload /> */}
       </div>

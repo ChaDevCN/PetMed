@@ -17,13 +17,19 @@ export const uploadActions  = async(data:FormData) => {
       return res
 }
 
+// 添加医生
 export const addDoctor = async(data:any) => {
   const res  = await fetchData({
     url:'/medical-management/add-doctor',
     method:'POSt',
     data
   })
-  console.log(res,res.exception.response.message);
+  console.log(res);
 
   return res
 }
+// 
+export const findUsersByRoleId = async(roleId:string) =>  await fetchData({
+  url:`/user/role/${roleId}`,
+  method:'get',
+})
